@@ -6,16 +6,10 @@ import 'package:pokemon/Ui/Screens/favourites_screen.dart';
 import 'package:pokemon/Ui/Widgets/search_delegate.dart';
 import 'package:pokemon/core/const/text_style.dart';
 import 'package:pokemon/core/model/poke_mon_list_model/poke_mon_list_model.dart';
+import 'package:pokemon/core/view_model/fetch_all_pokemons/fetch_all_pokemons_bloc.dart';
 import 'package:pokemon/core/view_model/get_pokemon_list/get_pokemon_list_bloc.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokemon/core/const/text_style.dart';
-import 'package:pokemon/core/model/poke_mon_list_model/poke_mon_list_model.dart';
-import 'package:pokemon/core/view_model/get_pokemon_list/get_pokemon_list_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -134,7 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Home'),
+        centerTitle: true,
+        title: const Text('Pokemon'),
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
@@ -235,23 +230,135 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyles.poppins14lightgreyDA6,
                           ),
                           const SizedBox(height: 40),
-                          InkWell(
-                            onTap: () {
-                              showSearch(
-                                context: context,
-                                delegate: PokemonSearchDelegate(),
-                              );
-                            },
-                            child: Container(
-                              child: Text("Search"),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.01),
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    showSearch(
+                                      context: context,
+                                      delegate: PokemonSearchDelegate(
+                                        bloc: context
+                                            .read<FetchAllPokemonsBloc>(),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.75,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 231, 231, 231),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: const Row(
+                                      children: [
+                                        SizedBox(width: 10),
+                                        Icon(Icons.search),
+                                        SizedBox(width: 10),
+                                        Text("Name or Number")
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.13,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 101, 100, 100),
+                                      borderRadius: BorderRadius.circular(14)),
+                                  child: Center(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 6,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                color: Colors
+                                                    .transparent, // Set background to transparent
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                  color: Colors
+                                                      .white, // Border color
+                                                  width:
+                                                      1, // Border width (adjust as needed)
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 3),
+                                            Container(
+                                              width: 20,
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 20,
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 3),
+                                            Container(
+                                              width: 6,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                color: Colors
+                                                    .transparent, // Set background to transparent
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                  color: Colors
+                                                      .white, // Border color
+                                                  width:
+                                                      1, // Border width (adjust as needed)
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Text("Filter")
                         ],
                       ),
                     ),
                   ],
                 ),
+                const SizedBox(height: 30),
                 BlocBuilder<GetPokemonListBloc, GetPokemonListState>(
                   builder: (context, state) {
                     return Column(
@@ -271,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return const Center(child: Text("No Internet"));
                           },
                           success: (value) {
-                            allPokemons.addAll(value.pokemonListmodel.results!);
+                            allPokemons.addAll(value.pokemonListmodel.results);
 
                             return Padding(
                               padding:

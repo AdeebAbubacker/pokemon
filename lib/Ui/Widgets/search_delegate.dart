@@ -1,25 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon/core/view_model/fetch_all_pokemons/fetch_all_pokemons_bloc.dart';
 
 class PokemonSearchDelegate extends SearchDelegate<String> {
-  List<String> _allPokemons = [];
+  final FetchAllPokemonsBloc bloc;
 
-  PokemonSearchDelegate() {
-    _fetchAllPokemons();
-  }
-//------------------------
-//---------------
-  Future<void> _fetchAllPokemons() async {
-    final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=1000'));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      _allPokemons = List<String>.from(data['results'].map((pokemon) => pokemon['name']));
-    } else {
-      throw Exception('Failed to load Pokémon');
-    }
+  PokemonSearchDelegate({required this.bloc}) {
+    bloc.add(const FetchAllPokemonsEvent
+        .fetchAllPokemonList()); // Fetch the first batch of Pokémon
   }
 
   @override
@@ -29,7 +17,7 @@ class PokemonSearchDelegate extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = ''; // Clear the query
         },
@@ -40,35 +28,106 @@ class PokemonSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
-       
+        close(context, ''); // Close search
       },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    // You can handle what happens after a user selects a Pokémon here.
-    return Container(); // You could show the selected Pokémon here.
+    return Container(); // You can display the selected Pokémon here.
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestions = query.isEmpty
-        ? []
-        : _allPokemons.where((pokemon) => pokemon.startsWith(query.toLowerCase())).toList();
+    return BlocBuilder<FetchAllPokemonsBloc, FetchAllPokemonsState>(
+      bloc: bloc,
+      builder: (context, state) {
+        return state.maybeMap(
+          loading: (_) => const Center(child: CircularProgressIndicator()),
+          success: (successState) {
+            final pokemons = successState.pokemonListmodel.results
+                .map((pokemon) => pokemon.name)
+                .where((pokemon) => pokemon.startsWith(query.toLowerCase()))
+                .toList();
 
-    return ListView.builder(
-      itemCount: suggestions.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(suggestions[index]),
-          onTap: () {
-            close(context, suggestions[index]); // Return the selected Pokémon
+            return ListView.builder(
+              itemCount: pokemons.length,
+              itemBuilder: (context, index) {
+                final pokemon = pokemons[index];
+                final imageUrl =
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png'; // Construct the image URL based on index
+
+                return ListTile(
+                  leading: Image.network(
+                    imageUrl,
+                    width: 50, // Set a fixed size for the image
+                    height: 50,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons
+                          .error); // Show error icon if image fails to load
+                    },
+                  ),
+                  title: Text(pokemons[index]),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PokemonDetailScreen(
+                            pokemonName: pokemon, pokemonIndex: index + 1),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
           },
+          failure: (failureState) =>
+              Center(child: Text('Error: ${failureState.error}')),
+          noInternet: (_) =>
+              const Center(child: Text('No Internet connection.')),
+          orElse: () => const Center(child: Text('No Pokémon found.')),
         );
       },
+    );
+  }
+}
+
+class PokemonDetailScreen extends StatelessWidget {
+  final String pokemonName;
+  final int pokemonIndex;
+
+  const PokemonDetailScreen({
+    Key? key,
+    required this.pokemonName,
+    required this.pokemonIndex,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final imageUrl =
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonIndex.png';
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(pokemonName),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(imageUrl, width: 200, height: 200),
+            const SizedBox(height: 20),
+            Text(
+              'You selected $pokemonName!',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text('Pokémon Index: $pokemonIndex'),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // For custom fonts
 import 'package:flutter_signin_button/flutter_signin_button.dart'; // For Google sign-in button
-
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; // For custom fonts
-import 'package:flutter_signin_button/flutter_signin_button.dart'; // For Google sign-in button
 import 'package:firebase_auth/firebase_auth.dart'; // Firebase Authentication
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pokemon/Ui/Screens/home_screen.dart'; // Google Sign-in
@@ -12,8 +8,6 @@ import 'package:pokemon/Ui/Screens/home_screen.dart'; // Google Sign-in
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  // Google sign-in logic
-// Google sign-in logic
   Future<User?> _signInWithGoogle(BuildContext context) async {
     try {
       // Sign out from the previous session to ensure the popup appears again

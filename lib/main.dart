@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokemon/test/test_screen.dart';
+import 'package:pokemon/Ui/Screens/home_screen.dart';
+import 'package:pokemon/Ui/Screens/login_screen.dart';
+import 'package:pokemon/core/view_model/fetch_all_pokemons/fetch_all_pokemons_bloc.dart';
 import 'package:pokemon/core/view_model/get_pokemon_list/get_pokemon_list_bloc.dart';
 import 'package:pokemon/firebase_options.dart';
-import 'package:pokemon/test/test_screen.dart';
+import 'package:pokemon/test/api_testing.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => GetPokemonListBloc(),
         ),
+        BlocProvider(
+          create: (context) => FetchAllPokemonsBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -33,7 +38,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:  TestScreen(),
+        home: const HomeScreen(),
       ),
     );
   }
