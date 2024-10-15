@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "700263567498",
+    "project_id": "pokemon-6a137",
+    "storage_bucket": "pokemon-6a137.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700263567498:android:ad33e5ba066b1b14791d73",
+        "android_client_info": {
+          "package_name": "com.pokemon.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700263567498-nagam0fu21g3crlborjqmim0insdtfnl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pokemon.app",
+            "certificate_hash": "7f37ea07d0e7a94b593ef10d818d43c0c4a90258"
+          }
+        },
+        {
+          "client_id": "700263567498-7n2bjjq556vltg7viilafqujue4ogosm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGzdo0KLGQ3YZpPN1h686jj8dKVaHl8vs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700263567498-7n2bjjq556vltg7viilafqujue4ogosm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "700263567498-pcdjseggratokpjt1427ph8cs8dovtpb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pokemon.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
