@@ -10,6 +10,7 @@ class PokemonSearchDelegate extends SearchDelegate<String> {
     _fetchAllPokemons();
   }
 //------------------------
+//---------------
   Future<void> _fetchAllPokemons() async {
     final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=1000'));
 
