@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon/Ui/Screens/favourites_screen.dart';
+import 'package:pokemon/Ui/Screens/pokemon_details_screen.dart';
 import 'package:pokemon/Ui/Widgets/search_delegate.dart';
 import 'package:pokemon/core/const/text_style.dart';
 import 'package:pokemon/core/model/poke_mon_list_model/poke_mon_list_model.dart';
@@ -390,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio: 1 / 1.5,
+                                  childAspectRatio: 1 / 1.7,
                                   mainAxisSpacing: 15,
                                   crossAxisSpacing: 15,
                                 ),
@@ -399,7 +400,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                   return GestureDetector(
                                     onTap: () {
-                                      // Handle tap for Pokémon detail screen if needed
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return PokemonDetailScreen(
+                                            pokemonName: 'e',
+                                            pokemonIndex: index + 1);
+                                      }));
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -425,6 +431,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                           const SizedBox(height: 8),
                                           Text(
                                             pokemon.name,
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            pokemon.pokemonId.toString().padLeft(
+                                                3,
+                                                '0'), // Ensures a minimum of 3 digits
                                             style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,

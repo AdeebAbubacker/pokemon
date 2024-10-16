@@ -10,7 +10,12 @@ class FavouritesScreen extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      return const Center(child: Text('User not logged in.'));
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Favorites'),
+        ),
+        body: Center(child: Text('User not logged in.')),
+      );
     }
 
     return Scaffold(
