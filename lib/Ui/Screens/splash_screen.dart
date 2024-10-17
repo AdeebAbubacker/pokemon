@@ -1,5 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon/Ui/Screens/home_screen.dart';
+import 'package:pokemon/Ui/Screens/login_screen.dart';
 import 'package:pokemon/core/const/text_style.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -7,10 +11,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_const_constructors
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const HomeScreen();
-      },));
+      _checkUserSignIn(context);
     });
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -46,5 +49,25 @@ class SplashScreen extends StatelessWidget {
         ]),
       ),
     );
+  }
+
+  void _checkUserSignIn(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 2)); // Simulate loading time
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // User is signed in, navigate to HomeScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    } else {
+      // User is not signed in, navigate to LoginScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    }
   }
 }

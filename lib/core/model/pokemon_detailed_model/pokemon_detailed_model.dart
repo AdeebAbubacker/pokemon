@@ -1,3 +1,22 @@
+class PokemonFullDetailModel {
+  final PokemonDetailedModel pokemonDetails;
+  final String speciesName;
+  final String flavorText;
+  final String frontImage;
+  final String backImage;
+  final String shinyImage;
+
+  PokemonFullDetailModel({
+    required this.pokemonDetails,
+    required this.speciesName,
+    required this.flavorText,
+    required this.frontImage,
+    required this.backImage,
+    required this.shinyImage,
+  });
+}
+
+
 class PokemonDetailedModel {
   List<Ability>? abilities;
   int? baseExperience;

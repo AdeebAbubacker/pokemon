@@ -5,7 +5,7 @@ class GetPokemonDetailsState with _$GetPokemonDetailsState {
   const factory GetPokemonDetailsState.initial() = _Initial;
   const factory GetPokemonDetailsState.loading() = _Loading;
   const factory GetPokemonDetailsState.success(
-      PokemonDetailedModel pokemondetails) = _Success;
+      PokemonFullDetailModel pokemondetails) = _Success;
   const factory GetPokemonDetailsState.noInternet() = _NoInternet;
   const factory GetPokemonDetailsState.failure(String error) = _Failure;
 }

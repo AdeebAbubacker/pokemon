@@ -68,32 +68,84 @@ class ApiService {
     }
   }
 
-  static Future<Either<String, PokemonDetailedModel>> getPokemonDeatils(
-      {required String pokemonId}) async {
+  // static Future<Either<String, PokemonDetailedModel>> getPokemonDeatils(
+  //     {required String pokemonId}) async {
+  //   try {
+  //     final hasInternet = await ConnectivityChecker().hasInternetAccess();
+  //     if (!hasInternet) {
+  //       return const Left("No Internet");
+  //     }
+  //     final url = Uri.parse('https://pokeapi.co/api/v2/pokemon/${pokemonId}');
+
+  //     final response = await http.get(url);
+  //     if (response.statusCode == 200) {
+  //       var jsonMap = json.decode(response.body);
+  //       var getProducts = PokemonDetailedModel.fromJson(jsonMap);
+  //       print(getProducts);
+  //       return right(getProducts); // Return the list of products
+  //     } else if (response.statusCode == 500) {
+  //       var jsonMap = json.decode(response.body);
+  //       print('500');
+  //       print('failure ${jsonMap}');
+  //       return left('l');
+  //     } else {
+  //       print('eror');
+  //       return left('l');
+  //     }
+  //   } catch (e) {
+  //     print('eror ${e.toString()}');
+  //     return const Left("Something Went Wrong");
+  //   }
+  // }
+
+  static Future<Either<String, PokemonFullDetailModel>> getPokemonDetails({
+    required String pokemonId,
+  }) async {
     try {
       final hasInternet = await ConnectivityChecker().hasInternetAccess();
       if (!hasInternet) {
         return const Left("No Internet");
       }
-      final url = Uri.parse('https://pokeapi.co/api/v2/pokemon/${pokemonId}');
 
+      // Fetch Pokémon details
+      final url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$pokemonId');
       final response = await http.get(url);
-      if (response.statusCode == 200) {
-        var jsonMap = json.decode(response.body);
-        var getProducts = PokemonDetailedModel.fromJson(jsonMap);
-        print(getProducts);
-        return right(getProducts); // Return the list of products
-      } else if (response.statusCode == 500) {
-        var jsonMap = json.decode(response.body);
-        print('500');
-        print('failure ${jsonMap}');
-        return left('l');
-      } else {
-        print('eror');
-        return left('l');
+
+      if (response.statusCode != 200) {
+        return Left('Failed to fetch Pokémon details');
       }
+
+      var jsonMap = json.decode(response.body);
+      var pokemonDetails = PokemonDetailedModel.fromJson(jsonMap);
+
+      // Fetch Pokémon species details
+      final speciesUrl =
+          Uri.parse('https://pokeapi.co/api/v2/pokemon-species/$pokemonId');
+      final speciesResponse = await http.get(speciesUrl);
+
+      if (speciesResponse.statusCode != 200) {
+        return Left('Failed to fetch Pokémon species details');
+      }
+
+      var speciesData = json.decode(speciesResponse.body);
+      String speciesName = speciesData['name'];
+      String flavorText = speciesData['flavor_text_entries'][0]['flavor_text'];
+
+      // Get different sprite URLs
+      String frontImage = jsonMap['sprites']['front_default'];
+      String backImage = jsonMap['sprites']['back_default'];
+      String shinyImage = jsonMap['sprites']['front_shiny'];
+
+      // Combine details into one model
+      return Right(PokemonFullDetailModel(
+        pokemonDetails: pokemonDetails,
+        speciesName: speciesName,
+        flavorText: flavorText,
+        frontImage: frontImage,
+        backImage: backImage,
+        shinyImage: shinyImage,
+      ));
     } catch (e) {
-      print('eror ${e.toString()}');
       return const Left("Something Went Wrong");
     }
   }

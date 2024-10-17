@@ -13,7 +13,7 @@ class GetPokemonDetailsBloc
     on<_GetPokemonDetails>((event, emit) async {
       emit(const GetPokemonDetailsState.loading());
       final response =
-          await ApiService.getPokemonDeatils(pokemonId: event.pokemonId);
+          await ApiService.getPokemonDetails(pokemonId: event.pokemonId);
 
       response.fold((failure) {
         if (failure == "No Internet") {
