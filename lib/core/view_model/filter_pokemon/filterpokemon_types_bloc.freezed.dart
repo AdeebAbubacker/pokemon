@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_pokemon_list_bloc.dart';
+part of 'filterpokemon_types_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,65 +15,66 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$GetPokemonListEvent {
+mixin _$FilterpokemonTypesEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(int offset) getPokemonList,
+    required TResult Function(String type) filterPokemon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(int offset)? getPokemonList,
+    TResult? Function(String type)? filterPokemon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(int offset)? getPokemonList,
+    TResult Function(String type)? filterPokemon,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetPokemonList value) getPokemonList,
+    required TResult Function(_FilterpokemonTypesEvent value) filterPokemon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetPokemonList value)? getPokemonList,
+    TResult? Function(_FilterpokemonTypesEvent value)? filterPokemon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetPokemonList value)? getPokemonList,
+    TResult Function(_FilterpokemonTypesEvent value)? filterPokemon,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GetPokemonListEventCopyWith<$Res> {
-  factory $GetPokemonListEventCopyWith(
-          GetPokemonListEvent value, $Res Function(GetPokemonListEvent) then) =
-      _$GetPokemonListEventCopyWithImpl<$Res, GetPokemonListEvent>;
+abstract class $FilterpokemonTypesEventCopyWith<$Res> {
+  factory $FilterpokemonTypesEventCopyWith(FilterpokemonTypesEvent value,
+          $Res Function(FilterpokemonTypesEvent) then) =
+      _$FilterpokemonTypesEventCopyWithImpl<$Res, FilterpokemonTypesEvent>;
 }
 
 /// @nodoc
-class _$GetPokemonListEventCopyWithImpl<$Res, $Val extends GetPokemonListEvent>
-    implements $GetPokemonListEventCopyWith<$Res> {
-  _$GetPokemonListEventCopyWithImpl(this._value, this._then);
+class _$FilterpokemonTypesEventCopyWithImpl<$Res,
+        $Val extends FilterpokemonTypesEvent>
+    implements $FilterpokemonTypesEventCopyWith<$Res> {
+  _$FilterpokemonTypesEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GetPokemonListEvent
+  /// Create a copy of FilterpokemonTypesEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -86,13 +87,13 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$GetPokemonListEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$FilterpokemonTypesEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetPokemonListEvent
+  /// Create a copy of FilterpokemonTypesEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -103,7 +104,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'GetPokemonListEvent.started()';
+    return 'FilterpokemonTypesEvent.started()';
   }
 
   @override
@@ -119,7 +120,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(int offset) getPokemonList,
+    required TResult Function(String type) filterPokemon,
   }) {
     return started();
   }
@@ -128,7 +129,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(int offset)? getPokemonList,
+    TResult? Function(String type)? filterPokemon,
   }) {
     return started?.call();
   }
@@ -137,7 +138,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(int offset)? getPokemonList,
+    TResult Function(String type)? filterPokemon,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -150,7 +151,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetPokemonList value) getPokemonList,
+    required TResult Function(_FilterpokemonTypesEvent value) filterPokemon,
   }) {
     return started(this);
   }
@@ -159,7 +160,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetPokemonList value)? getPokemonList,
+    TResult? Function(_FilterpokemonTypesEvent value)? filterPokemon,
   }) {
     return started?.call(this);
   }
@@ -168,7 +169,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetPokemonList value)? getPokemonList,
+    TResult Function(_FilterpokemonTypesEvent value)? filterPokemon,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -178,103 +179,106 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements GetPokemonListEvent {
+abstract class _Started implements FilterpokemonTypesEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$GetPokemonListImplCopyWith<$Res> {
-  factory _$$GetPokemonListImplCopyWith(_$GetPokemonListImpl value,
-          $Res Function(_$GetPokemonListImpl) then) =
-      __$$GetPokemonListImplCopyWithImpl<$Res>;
+abstract class _$$FilterpokemonTypesEventImplCopyWith<$Res> {
+  factory _$$FilterpokemonTypesEventImplCopyWith(
+          _$FilterpokemonTypesEventImpl value,
+          $Res Function(_$FilterpokemonTypesEventImpl) then) =
+      __$$FilterpokemonTypesEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int offset});
+  $Res call({String type});
 }
 
 /// @nodoc
-class __$$GetPokemonListImplCopyWithImpl<$Res>
-    extends _$GetPokemonListEventCopyWithImpl<$Res, _$GetPokemonListImpl>
-    implements _$$GetPokemonListImplCopyWith<$Res> {
-  __$$GetPokemonListImplCopyWithImpl(
-      _$GetPokemonListImpl _value, $Res Function(_$GetPokemonListImpl) _then)
+class __$$FilterpokemonTypesEventImplCopyWithImpl<$Res>
+    extends _$FilterpokemonTypesEventCopyWithImpl<$Res,
+        _$FilterpokemonTypesEventImpl>
+    implements _$$FilterpokemonTypesEventImplCopyWith<$Res> {
+  __$$FilterpokemonTypesEventImplCopyWithImpl(
+      _$FilterpokemonTypesEventImpl _value,
+      $Res Function(_$FilterpokemonTypesEventImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetPokemonListEvent
+  /// Create a copy of FilterpokemonTypesEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? offset = null,
+    Object? type = null,
   }) {
-    return _then(_$GetPokemonListImpl(
-      offset: null == offset
-          ? _value.offset
-          : offset // ignore: cast_nullable_to_non_nullable
-              as int,
+    return _then(_$FilterpokemonTypesEventImpl(
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$GetPokemonListImpl implements _GetPokemonList {
-  const _$GetPokemonListImpl({required this.offset});
+class _$FilterpokemonTypesEventImpl implements _FilterpokemonTypesEvent {
+  const _$FilterpokemonTypesEventImpl({required this.type});
 
   @override
-  final int offset;
+  final String type;
 
   @override
   String toString() {
-    return 'GetPokemonListEvent.getPokemonList(offset: $offset)';
+    return 'FilterpokemonTypesEvent.filterPokemon(type: $type)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GetPokemonListImpl &&
-            (identical(other.offset, offset) || other.offset == offset));
+            other is _$FilterpokemonTypesEventImpl &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, offset);
+  int get hashCode => Object.hash(runtimeType, type);
 
-  /// Create a copy of GetPokemonListEvent
+  /// Create a copy of FilterpokemonTypesEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$GetPokemonListImplCopyWith<_$GetPokemonListImpl> get copyWith =>
-      __$$GetPokemonListImplCopyWithImpl<_$GetPokemonListImpl>(
-          this, _$identity);
+  _$$FilterpokemonTypesEventImplCopyWith<_$FilterpokemonTypesEventImpl>
+      get copyWith => __$$FilterpokemonTypesEventImplCopyWithImpl<
+          _$FilterpokemonTypesEventImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(int offset) getPokemonList,
+    required TResult Function(String type) filterPokemon,
   }) {
-    return getPokemonList(offset);
+    return filterPokemon(type);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(int offset)? getPokemonList,
+    TResult? Function(String type)? filterPokemon,
   }) {
-    return getPokemonList?.call(offset);
+    return filterPokemon?.call(type);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(int offset)? getPokemonList,
+    TResult Function(String type)? filterPokemon,
     required TResult orElse(),
   }) {
-    if (getPokemonList != null) {
-      return getPokemonList(offset);
+    if (filterPokemon != null) {
+      return filterPokemon(type);
     }
     return orElse();
   }
@@ -283,54 +287,54 @@ class _$GetPokemonListImpl implements _GetPokemonList {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetPokemonList value) getPokemonList,
+    required TResult Function(_FilterpokemonTypesEvent value) filterPokemon,
   }) {
-    return getPokemonList(this);
+    return filterPokemon(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetPokemonList value)? getPokemonList,
+    TResult? Function(_FilterpokemonTypesEvent value)? filterPokemon,
   }) {
-    return getPokemonList?.call(this);
+    return filterPokemon?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetPokemonList value)? getPokemonList,
+    TResult Function(_FilterpokemonTypesEvent value)? filterPokemon,
     required TResult orElse(),
   }) {
-    if (getPokemonList != null) {
-      return getPokemonList(this);
+    if (filterPokemon != null) {
+      return filterPokemon(this);
     }
     return orElse();
   }
 }
 
-abstract class _GetPokemonList implements GetPokemonListEvent {
-  const factory _GetPokemonList({required final int offset}) =
-      _$GetPokemonListImpl;
+abstract class _FilterpokemonTypesEvent implements FilterpokemonTypesEvent {
+  const factory _FilterpokemonTypesEvent({required final String type}) =
+      _$FilterpokemonTypesEventImpl;
 
-  int get offset;
+  String get type;
 
-  /// Create a copy of GetPokemonListEvent
+  /// Create a copy of FilterpokemonTypesEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GetPokemonListImplCopyWith<_$GetPokemonListImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FilterpokemonTypesEventImplCopyWith<_$FilterpokemonTypesEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$GetPokemonListState {
+mixin _$FilterpokemonTypesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokeMonListFullModel pokemonListmodel) success,
+    required TResult Function(PokemonTypeModel pokemondetails) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) =>
@@ -339,7 +343,7 @@ mixin _$GetPokemonListState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult? Function(PokemonTypeModel pokemondetails)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) =>
@@ -348,7 +352,7 @@ mixin _$GetPokemonListState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult Function(PokemonTypeModel pokemondetails)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -385,23 +389,24 @@ mixin _$GetPokemonListState {
 }
 
 /// @nodoc
-abstract class $GetPokemonListStateCopyWith<$Res> {
-  factory $GetPokemonListStateCopyWith(
-          GetPokemonListState value, $Res Function(GetPokemonListState) then) =
-      _$GetPokemonListStateCopyWithImpl<$Res, GetPokemonListState>;
+abstract class $FilterpokemonTypesStateCopyWith<$Res> {
+  factory $FilterpokemonTypesStateCopyWith(FilterpokemonTypesState value,
+          $Res Function(FilterpokemonTypesState) then) =
+      _$FilterpokemonTypesStateCopyWithImpl<$Res, FilterpokemonTypesState>;
 }
 
 /// @nodoc
-class _$GetPokemonListStateCopyWithImpl<$Res, $Val extends GetPokemonListState>
-    implements $GetPokemonListStateCopyWith<$Res> {
-  _$GetPokemonListStateCopyWithImpl(this._value, this._then);
+class _$FilterpokemonTypesStateCopyWithImpl<$Res,
+        $Val extends FilterpokemonTypesState>
+    implements $FilterpokemonTypesStateCopyWith<$Res> {
+  _$FilterpokemonTypesStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -414,13 +419,13 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$GetPokemonListStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$FilterpokemonTypesStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -431,7 +436,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'GetPokemonListState.initial()';
+    return 'FilterpokemonTypesState.initial()';
   }
 
   @override
@@ -448,7 +453,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokeMonListFullModel pokemonListmodel) success,
+    required TResult Function(PokemonTypeModel pokemondetails) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -460,7 +465,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult? Function(PokemonTypeModel pokemondetails)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -472,7 +477,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult Function(PokemonTypeModel pokemondetails)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -524,7 +529,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements GetPokemonListState {
+abstract class _Initial implements FilterpokemonTypesState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -537,13 +542,13 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$GetPokemonListStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$FilterpokemonTypesStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -554,7 +559,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'GetPokemonListState.loading()';
+    return 'FilterpokemonTypesState.loading()';
   }
 
   @override
@@ -571,7 +576,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokeMonListFullModel pokemonListmodel) success,
+    required TResult Function(PokemonTypeModel pokemondetails) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -583,7 +588,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult? Function(PokemonTypeModel pokemondetails)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -595,7 +600,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult Function(PokemonTypeModel pokemondetails)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -647,7 +652,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements GetPokemonListState {
+abstract class _Loading implements FilterpokemonTypesState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -657,29 +662,29 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({PokeMonListFullModel pokemonListmodel});
+  $Res call({PokemonTypeModel pokemondetails});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GetPokemonListStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$FilterpokemonTypesStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pokemonListmodel = null,
+    Object? pokemondetails = null,
   }) {
     return _then(_$SuccessImpl(
-      null == pokemonListmodel
-          ? _value.pokemonListmodel
-          : pokemonListmodel // ignore: cast_nullable_to_non_nullable
-              as PokeMonListFullModel,
+      null == pokemondetails
+          ? _value.pokemondetails
+          : pokemondetails // ignore: cast_nullable_to_non_nullable
+              as PokemonTypeModel,
     ));
   }
 }
@@ -687,14 +692,14 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.pokemonListmodel);
+  const _$SuccessImpl(this.pokemondetails);
 
   @override
-  final PokeMonListFullModel pokemonListmodel;
+  final PokemonTypeModel pokemondetails;
 
   @override
   String toString() {
-    return 'GetPokemonListState.success(pokemonListmodel: $pokemonListmodel)';
+    return 'FilterpokemonTypesState.success(pokemondetails: $pokemondetails)';
   }
 
   @override
@@ -702,14 +707,14 @@ class _$SuccessImpl implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            (identical(other.pokemonListmodel, pokemonListmodel) ||
-                other.pokemonListmodel == pokemonListmodel));
+            (identical(other.pokemondetails, pokemondetails) ||
+                other.pokemondetails == pokemondetails));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pokemonListmodel);
+  int get hashCode => Object.hash(runtimeType, pokemondetails);
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -722,11 +727,11 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokeMonListFullModel pokemonListmodel) success,
+    required TResult Function(PokemonTypeModel pokemondetails) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
-    return success(pokemonListmodel);
+    return success(pokemondetails);
   }
 
   @override
@@ -734,11 +739,11 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult? Function(PokemonTypeModel pokemondetails)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
-    return success?.call(pokemonListmodel);
+    return success?.call(pokemondetails);
   }
 
   @override
@@ -746,13 +751,13 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult Function(PokemonTypeModel pokemondetails)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(pokemonListmodel);
+      return success(pokemondetails);
     }
     return orElse();
   }
@@ -798,13 +803,12 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements GetPokemonListState {
-  const factory _Success(final PokeMonListFullModel pokemonListmodel) =
-      _$SuccessImpl;
+abstract class _Success implements FilterpokemonTypesState {
+  const factory _Success(final PokemonTypeModel pokemondetails) = _$SuccessImpl;
 
-  PokeMonListFullModel get pokemonListmodel;
+  PokemonTypeModel get pokemondetails;
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
@@ -820,13 +824,13 @@ abstract class _$$NoInternetImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$NoInternetImplCopyWithImpl<$Res>
-    extends _$GetPokemonListStateCopyWithImpl<$Res, _$NoInternetImpl>
+    extends _$FilterpokemonTypesStateCopyWithImpl<$Res, _$NoInternetImpl>
     implements _$$NoInternetImplCopyWith<$Res> {
   __$$NoInternetImplCopyWithImpl(
       _$NoInternetImpl _value, $Res Function(_$NoInternetImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -837,7 +841,7 @@ class _$NoInternetImpl implements _NoInternet {
 
   @override
   String toString() {
-    return 'GetPokemonListState.noInternet()';
+    return 'FilterpokemonTypesState.noInternet()';
   }
 
   @override
@@ -854,7 +858,7 @@ class _$NoInternetImpl implements _NoInternet {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokeMonListFullModel pokemonListmodel) success,
+    required TResult Function(PokemonTypeModel pokemondetails) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -866,7 +870,7 @@ class _$NoInternetImpl implements _NoInternet {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult? Function(PokemonTypeModel pokemondetails)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -878,7 +882,7 @@ class _$NoInternetImpl implements _NoInternet {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult Function(PokemonTypeModel pokemondetails)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -930,7 +934,7 @@ class _$NoInternetImpl implements _NoInternet {
   }
 }
 
-abstract class _NoInternet implements GetPokemonListState {
+abstract class _NoInternet implements FilterpokemonTypesState {
   const factory _NoInternet() = _$NoInternetImpl;
 }
 
@@ -945,13 +949,13 @@ abstract class _$$FailureImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$FailureImplCopyWithImpl<$Res>
-    extends _$GetPokemonListStateCopyWithImpl<$Res, _$FailureImpl>
+    extends _$FilterpokemonTypesStateCopyWithImpl<$Res, _$FailureImpl>
     implements _$$FailureImplCopyWith<$Res> {
   __$$FailureImplCopyWithImpl(
       _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -977,7 +981,7 @@ class _$FailureImpl implements _Failure {
 
   @override
   String toString() {
-    return 'GetPokemonListState.failure(error: $error)';
+    return 'FilterpokemonTypesState.failure(error: $error)';
   }
 
   @override
@@ -991,7 +995,7 @@ class _$FailureImpl implements _Failure {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -1004,7 +1008,7 @@ class _$FailureImpl implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokeMonListFullModel pokemonListmodel) success,
+    required TResult Function(PokemonTypeModel pokemondetails) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -1016,7 +1020,7 @@ class _$FailureImpl implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult? Function(PokemonTypeModel pokemondetails)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -1028,7 +1032,7 @@ class _$FailureImpl implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokeMonListFullModel pokemonListmodel)? success,
+    TResult Function(PokemonTypeModel pokemondetails)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -1080,12 +1084,12 @@ class _$FailureImpl implements _Failure {
   }
 }
 
-abstract class _Failure implements GetPokemonListState {
+abstract class _Failure implements FilterpokemonTypesState {
   const factory _Failure(final String error) = _$FailureImpl;
 
   String get error;
 
-  /// Create a copy of GetPokemonListState
+  /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>

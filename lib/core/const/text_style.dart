@@ -28,4 +28,22 @@ class TextStyles {
     fontWeight: FontWeight.w900,
     color: const Color.fromARGB(255, 20, 21, 34),
   );
+
+  static final TextStyle poppins19white = poppins.copyWith(
+    fontSize: 19,
+    fontWeight: FontWeight.bold,
+    color: const Color.fromARGB(255, 255, 255, 255),
+  );
+
+  static final TextStyle poppins12black = poppins.copyWith(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: const Color.fromARGB(255, 1, 1, 22),
+  );
+
+    static final TextStyle poppins12white = poppins.copyWith(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: const Color.fromARGB(255, 255, 255, 255),
+  );
 }

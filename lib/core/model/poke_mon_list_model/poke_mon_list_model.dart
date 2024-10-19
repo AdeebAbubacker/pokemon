@@ -1,3 +1,13 @@
+class PokeMonListFullModel {
+  final PokeMonListModel pokeMonListModel;
+    final List<List<String>> speciesTypes; // Changed to a list of lists
+
+  PokeMonListFullModel({
+    required this.pokeMonListModel,
+    required this.speciesTypes,
+  });
+}
+
 class PokeMonListModel {
   final int count;
   final String? next;

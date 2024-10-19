@@ -98,41 +98,44 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         const SizedBox(height: 16),
 
                         // Tabs for Detail, Types, and Stats
-                        DefaultTabController(
-                          length: 4,
-                          child: Column(
-                            children: [
-                              const TabBar(
-                                labelColor: Colors.black,
-                                indicatorColor: Colors.blue,
-                                tabs: [
-                                  Tab(text: "Forms"),
-                                  Tab(text: "Detail"),
-                                  Tab(text: "Types"),
-                                  Tab(text: "Stats"),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 400,
-                                width: double.infinity,
-                                child: TabBarView(
-                                  children: [
-                                    BuildFormsTab(
-                                      pokemonData: fullpokemonData,
-                                    ),
-                                    BuildDetailedTab(
-                                      pokemonData: pokemonData,
-                                    ),
-                                    BuildTypesTab(
-                                      pokemonData: pokemonData,
-                                    ),
-                                    BuildStatsTab(
-                                      pokemonData: pokemonData,
-                                    ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: DefaultTabController(
+                            length: 4,
+                            child: Column(
+                              children: [
+                                const TabBar(
+                                  labelColor: Colors.black,
+                                  indicatorColor: Colors.blue,
+                                  tabs: [
+                                    Tab(text: "Forms"),
+                                    Tab(text: "Detail"),
+                                    Tab(text: "Types"),
+                                    Tab(text: "Stats"),
                                   ],
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: 400,
+                                  width: double.infinity,
+                                  child: TabBarView(
+                                    children: [
+                                      BuildFormsTab(
+                                        pokemonData: fullpokemonData,
+                                      ),
+                                      BuildDetailedTab(
+                                        pokemonData: pokemonData,
+                                      ),
+                                      BuildTypesTab(
+                                        pokemonData: pokemonData,
+                                      ),
+                                      BuildStatsTab(
+                                        pokemonData: pokemonData,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -185,7 +188,10 @@ class BuildFormsTab extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
+        SizedBox(height: 30),
         const Text('Forms',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 10),
@@ -235,7 +241,18 @@ class BuildFormsTab extends StatelessWidget {
 
         // Flavor text
         const SizedBox(height: 10),
-        Text('${pokemonData.flavorText}'),
+        Text('Mega Evolution'),
+        const SizedBox(height: 10),
+        Container(
+          width: double.infinity, // Make it take full width
+          child: Text(
+            'ssssss  dsgfdfg rgerg rterte erterterter ${pokemonData.flavorText.toString()}',
+            style: TextStyle(fontSize: 14),
+          ),
+        ),
+        Text(
+            'ssssss  dsgfdfg rgerg rterte erterterter ${pokemonData.flavorText.toString()}'),
+        Text('sssssssssssssssssdddddddddddddddddddddddddddddd')
       ],
     );
   }

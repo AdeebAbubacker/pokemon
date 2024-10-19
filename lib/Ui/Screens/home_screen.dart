@@ -123,6 +123,100 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Color _getOuterContainerColor(String type) {
+    switch (type.toLowerCase()) {
+      case 'grass':
+        return const Color.fromARGB(255, 107, 218, 110);
+      case 'poison':
+        return const Color.fromARGB(255, 207, 96,
+            227); // Violet color (or Colors.deepPurple if you prefer)
+      case 'fire':
+        return const Color.fromARGB(255, 245, 179, 93); // Yellow-orange color
+      case 'flying':
+        return const Color.fromARGB(255, 50, 118, 219); // Dark blue
+      case 'water':
+        return const Color.fromARGB(255, 97, 200, 248); // Light blue
+      case 'bug':
+        return const Color.fromARGB(255, 71, 205, 80); // Dark green
+      case 'normal':
+        return const Color.fromARGB(255, 202, 202, 202);
+      case 'electric':
+        return const Color.fromARGB(255, 244, 230, 101);
+      case 'ground':
+        return const Color.fromARGB(255, 216, 214, 214)
+            .withOpacity(0.5); // Transparent ash
+      case 'fairy':
+        return const Color.fromARGB(255, 240, 158, 255); // Light purple
+      case 'fighting':
+        return const Color.fromARGB(255, 225, 106, 246)
+            .withOpacity(0.5); // Transparent purple
+      case 'psychic':
+        return const Color.fromARGB(255, 255, 111, 100)
+            .withOpacity(0.5); // Transparent red
+      case 'rock':
+        return const Color.fromARGB(255, 40, 39, 39)
+            .withOpacity(0.5); // Transparent black
+      case 'steel':
+        return Colors.grey.shade800; // Dark grey
+      case 'ice':
+        return const Color.fromARGB(255, 116, 246, 230); // Dark green-blue
+      case 'dark':
+        return const Color.fromARGB(255, 35, 34, 34);
+      case 'ghost':
+        return const Color.fromARGB(255, 211, 208, 208);
+      case 'dragon':
+        return const Color.fromARGB(255, 78, 78, 78)
+            .withOpacity(0.7); // Black 700
+      default:
+        return const Color.fromARGB(
+            255, 147, 183, 201); // Greyish blue as the default color
+    }
+  }
+
+  Color _getContainerColor(String type) {
+    switch (type.toLowerCase()) {
+      case 'grass':
+        return Colors.green;
+      case 'poison':
+        return Colors
+            .purple; // Violet color (or Colors.deepPurple if you prefer)
+      case 'fire':
+        return Colors.orangeAccent; // Yellow-orange color
+      case 'flying':
+        return Colors.blue.shade900; // Dark blue
+      case 'water':
+        return Colors.lightBlueAccent; // Light blue
+      case 'bug':
+        return Colors.green.shade900; // Dark green
+      case 'normal':
+        return Colors.grey;
+      case 'electric':
+        return Colors.yellow;
+      case 'ground':
+        return Colors.grey.withOpacity(0.5); // Transparent ash
+      case 'fairy':
+        return Colors.purpleAccent.shade100; // Light purple
+      case 'fighting':
+        return Colors.purple.withOpacity(0.5); // Transparent purple
+      case 'psychic':
+        return Colors.red.withOpacity(0.5); // Transparent red
+      case 'rock':
+        return Colors.black.withOpacity(0.5); // Transparent black
+      case 'steel':
+        return Colors.grey.shade800; // Dark grey
+      case 'ice':
+        return Colors.teal.shade700; // Dark green-blue
+      case 'dark':
+        return Colors.black;
+      case 'ghost':
+        return Colors.grey.shade500;
+      case 'dragon':
+        return Colors.black.withOpacity(0.7); // Black 700
+      default:
+        return Colors.blueGrey; // Greyish blue as the default color
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     User? currentUser = FirebaseAuth.instance.currentUser;
@@ -217,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -249,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Container(
                                     width: MediaQuery.of(context).size.width *
-                                        0.75,
+                                        0.65,
                                     height: 50,
                                     decoration: BoxDecoration(
                                         color: const Color.fromARGB(
@@ -266,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 6),
+                                const Spacer(),
                                 Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.13,
@@ -379,88 +473,179 @@ class _HomeScreenState extends State<HomeScreen> {
                             return const Center(child: Text("No Internet"));
                           },
                           success: (value) {
-                            allPokemons.addAll(value.pokemonListmodel.results);
-
+                            // allPokemons.addAll(value
+                            //     .pokemonListmodel.pokeMonListModel.results);
+                            List<Widget> speciesTypeWidgets =
+                                value.pokemonListmodel.speciesTypes.map((type) {
+                              return Text(
+                                type.first,
+                                style: const TextStyle(fontSize: 5),
+                              );
+                            }).toList();
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 30),
-                              child: GridView.builder(
+                              child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: allPokemons.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 1 / 1.7,
-                                  mainAxisSpacing: 15,
-                                  crossAxisSpacing: 15,
-                                ),
+                                itemCount: value.pokemonListmodel
+                                    .pokeMonListModel.results.length,
                                 itemBuilder: (context, index) {
-                                  final pokemon = allPokemons[index];
-
+                                  String type = value.pokemonListmodel
+                                      .speciesTypes[index].first;
                                   return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return PokemonDetailScreen(
-                                            pokemonName: 'e',
-                                            pokemonIndex: index + 1);
-                                      }));
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 191, 253, 255),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          AspectRatio(
-                                            aspectRatio: 1 / 0.9,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Image.network(
-                                                pokemon.image,
-                                                width: double.infinity,
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return PokemonDetailScreen(
+                                              pokemonName: 'e',
+                                              pokemonIndex: index + 1);
+                                        }));
+                                      },
+                                      child: SizedBox(
+                                          width: 200,
+                                          height: 187,
+                                          child: Stack(
+                                            children: [
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 15),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          _getOuterContainerColor(
+                                                              type),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                '#${value.pokemonListmodel.pokeMonListModel.results[index].pokemonId.toString().padLeft(3, '0')}', // Ensures a minimum of 3 digits
+                                                                style: TextStyles
+                                                                    .poppins12black,
+                                                              ),
+                                                              Text(
+                                                                  value
+                                                                      .pokemonListmodel
+                                                                      .pokeMonListModel
+                                                                      .results[
+                                                                          index]
+                                                                      .name,
+                                                                  style: TextStyles
+                                                                      .poppins19white),
+                                                              Row(
+                                                                children: [
+                                                                  IconButton(
+                                                                    icon: Icon(
+                                                                      // Change icon based on favorite status
+                                                                      Icons
+                                                                          .favorite,
+                                                                      color: isFavorite(value
+                                                                              .pokemonListmodel
+                                                                              .pokeMonListModel
+                                                                              .results[index])
+                                                                          ? Colors.red
+                                                                          : Colors.grey,
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      _toggleFavorite(value
+                                                                          .pokemonListmodel
+                                                                          .pokeMonListModel
+                                                                          .results[index]);
+                                                                    },
+                                                                  ),
+                                                                  Wrap(
+                                                                    children: value
+                                                                            .pokemonListmodel
+                                                                            .speciesTypes
+                                                                            .isNotEmpty
+                                                                        ? value
+                                                                            .pokemonListmodel
+                                                                            .speciesTypes[
+                                                                                index] // Access the sublist at the specific index
+                                                                            .map((type) =>
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.all(2.0),
+                                                                                  child: Container(
+                                                                                    decoration: BoxDecoration(
+                                                                                        color: _getContainerColor(type),
+                                                                                        borderRadius: BorderRadius.circular(
+                                                                                          12,
+                                                                                        )),
+                                                                                    child: Padding(
+                                                                                      padding: const EdgeInsets.symmetric(
+                                                                                        horizontal: 9,
+                                                                                        vertical: 3,
+                                                                                      ),
+                                                                                      child: Text(
+                                                                                        type, // Display each type individually
+                                                                                        style: TextStyles.poppins12white, // Adjust font size as needed
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ))
+                                                                            .toList()
+                                                                        : [
+                                                                            const Text('fff',
+                                                                                style: TextStyle(fontSize: 12))
+                                                                          ], // Default text when the list is empty
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const Spacer(),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Text(
-                                            pokemon.name,
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            pokemon.pokemonId.toString().padLeft(
-                                                3,
-                                                '0'), // Ensures a minimum of 3 digits
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          IconButton(
-                                            icon: Icon(
-                                              // Change icon based on favorite status
-                                              Icons.favorite,
-                                              color: isFavorite(pokemon)
-                                                  ? Colors.red
-                                                  : Colors.grey,
-                                            ),
-                                            onPressed: () {
-                                              _toggleFavorite(pokemon);
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 15),
+                                                child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Image.network(
+                                                    value
+                                                        .pokemonListmodel
+                                                        .pokeMonListModel
+                                                        .results[index]
+                                                        .image,
+                                                    width: 130,
+                                                    height: 130,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )));
                                 },
                               ),
                             );
