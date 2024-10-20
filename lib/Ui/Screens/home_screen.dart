@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,9 +10,11 @@ import 'package:pokemon/Ui/Widgets/search_delegate.dart';
 import 'package:pokemon/core/const/text_style.dart';
 import 'package:pokemon/core/model/poke_mon_list_model/poke_mon_list_model.dart';
 import 'package:pokemon/core/view_model/fetch_all_pokemons/fetch_all_pokemons_bloc.dart';
+import 'package:pokemon/core/view_model/filter_pokemon/filterpokemon_types_bloc.dart';
 import 'package:pokemon/core/view_model/get_pokemon_list/get_pokemon_list_bloc.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pokemon/test/api_testing.dart'; // Import Firestore
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,6 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int offset = 0; // Initial offset
   List<PokemonModel> allPokemons = []; // Local list to cache loaded Pokémon
   bool isFetchingMore = false; // To track if we're currently fetching more data
+  bool _isItemSelected = false; // Track if an item is selected
+  final StreamController<bool> _itemSelectedController =
+      StreamController<bool>();
 
   // Firestore instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -54,6 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<GetPokemonListBloc>(context)
         .add(const GetPokemonListEvent.getPokemonList(offset: 0));
     offset += 20; // Update the offset for the next request
+  }
+
+  @override
+  void dispose() {
+    _itemSelectedController.close();
+    super.dispose();
+  }
+
+  void _updateItemSelected(bool value) {
+    _isItemSelected = value;
+    _itemSelectedController.sink.add(_isItemSelected);
   }
 
   void _fetchMoreData() {
@@ -219,6 +237,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Timer.periodic(Duration(seconds: 5), (_) {
+      print('_is Itemslected ${_isItemSelected}');
+    });
     User? currentUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
       key: _scaffoldKey,
@@ -361,87 +382,93 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 const Spacer(),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.13,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                          255, 101, 100, 100),
-                                      borderRadius: BorderRadius.circular(14)),
-                                  child: Center(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 6,
-                                              height: 6,
-                                              decoration: BoxDecoration(
-                                                color: Colors
-                                                    .transparent, // Set background to transparent
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
+                                InkWell(
+                                  onTap: () {
+                                    _showModal(context);
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.13,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 101, 100, 100),
+                                        borderRadius:
+                                            BorderRadius.circular(14)),
+                                    child: Center(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 6,
+                                                height: 6,
+                                                decoration: BoxDecoration(
                                                   color: Colors
-                                                      .white, // Border color
-                                                  width:
-                                                      1, // Border width (adjust as needed)
+                                                      .transparent, // Set background to transparent
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Colors
+                                                        .white, // Border color
+                                                    width:
+                                                        1, // Border width (adjust as needed)
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            const SizedBox(width: 3),
-                                            Container(
-                                              width: 20,
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 20,
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 3),
-                                            Container(
-                                              width: 6,
-                                              height: 6,
-                                              decoration: BoxDecoration(
-                                                color: Colors
-                                                    .transparent, // Set background to transparent
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                  color: Colors
-                                                      .white, // Border color
-                                                  width:
-                                                      1, // Border width (adjust as needed)
+                                              const SizedBox(width: 3),
+                                              Container(
+                                                width: 20,
+                                                height: 4,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 20,
+                                                height: 4,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 3),
+                                              Container(
+                                                width: 6,
+                                                height: 6,
+                                                decoration: BoxDecoration(
+                                                  color: Colors
+                                                      .transparent, // Set background to transparent
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Colors
+                                                        .white, // Border color
+                                                    width:
+                                                        1, // Border width (adjust as needed)
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -454,205 +481,418 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                BlocBuilder<GetPokemonListBloc, GetPokemonListState>(
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        state.maybeMap(
-                          orElse: () => const SizedBox.shrink(),
-                          failure: (value) {
-                            return Center(child: Text(value.error));
-                          },
-                          initial: (value) {
-                            return _buildLoadingGrid(); // Show loading grid
-                          },
-                          loading: (value) {
-                            return _buildLoadingGrid(); // Show loading grid
-                          },
-                          noInternet: (value) {
-                            return const Center(child: Text("No Internet"));
-                          },
-                          success: (value) {
-                            // allPokemons.addAll(value
-                            //     .pokemonListmodel.pokeMonListModel.results);
-                            List<Widget> speciesTypeWidgets =
-                                value.pokemonListmodel.speciesTypes.map((type) {
-                              return Text(
-                                type.first,
-                                style: const TextStyle(fontSize: 5),
-                              );
-                            }).toList();
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 30),
-                              child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: value.pokemonListmodel
-                                    .pokeMonListModel.results.length,
-                                itemBuilder: (context, index) {
-                                  String type = value.pokemonListmodel
-                                      .speciesTypes[index].first;
-                                  return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return PokemonDetailScreen(
-                                              pokemonName: 'e',
-                                              pokemonIndex: index + 1);
-                                        }));
-                                      },
-                                      child: SizedBox(
-                                          width: 200,
-                                          height: 187,
-                                          child: Stack(
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 15),
-                                                  child: Container(
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          _getOuterContainerColor(
-                                                              type),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
+                StreamBuilder<bool>(
+                  stream: _itemSelectedController.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data == true) {
+                      return BlocBuilder<FilterpokemonTypesBloc,
+                          FilterpokemonTypesState>(
+                        builder: (context, state) {
+                          return Column(
+                            children: [
+                              state.maybeMap(
+                                orElse: () => const SizedBox.shrink(),
+                                failure: (value) {
+                                  return Center(child: Text(value.error));
+                                },
+                                initial: (value) {
+                                  return _buildLoadingGrid(); // Show loading grid
+                                },
+                                loading: (value) {
+                                  return _buildLoadingGrid(); // Show loading grid
+                                },
+                                noInternet: (value) {
+                                  return const Center(
+                                      child: Text("No Internet"));
+                                },
+                                success: (value) {
+                                  // allPokemons.addAll(value
+                                  //     .pokemonListmodel.pokeMonListModel.results);
+                                  List<Widget> speciesTypeWidgets = value
+                                      .pokemonlist.speciesTypes
+                                      .map((type) {
+                                    return Text(
+                                      type.first,
+                                      style: const TextStyle(fontSize: 5),
+                                    );
+                                  }).toList();
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30),
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: value.pokemonlist
+                                          .pokeMonListModel.results.length,
+                                      itemBuilder: (context, index) {
+                                        String type = value.pokemonlist
+                                            .speciesTypes[index].first;
+                                        return GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return PokemonDetailScreen(
+                                                    pokemonName: 'e',
+                                                    pokemonIndex: index + 1);
+                                              }));
+                                            },
+                                            child: SizedBox(
+                                                width: 200,
+                                                height: 187,
+                                                child: Stack(
+                                                  children: [
+                                                    Align(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 15),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color:
+                                                                _getOuterContainerColor(
+                                                                    type),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              Text(
-                                                                '#${value.pokemonListmodel.pokeMonListModel.results[index].pokemonId.toString().padLeft(3, '0')}', // Ensures a minimum of 3 digits
-                                                                style: TextStyles
-                                                                    .poppins12black,
-                                                              ),
-                                                              Text(
-                                                                  value
-                                                                      .pokemonListmodel
-                                                                      .pokeMonListModel
-                                                                      .results[
-                                                                          index]
-                                                                      .name,
-                                                                  style: TextStyles
-                                                                      .poppins19white),
-                                                              Row(
-                                                                children: [
-                                                                  IconButton(
-                                                                    icon: Icon(
-                                                                      // Change icon based on favorite status
-                                                                      Icons
-                                                                          .favorite,
-                                                                      color: isFavorite(value
-                                                                              .pokemonListmodel
-                                                                              .pokeMonListModel
-                                                                              .results[index])
-                                                                          ? Colors.red
-                                                                          : Colors.grey,
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        8.0),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      '#${value.pokemonlist.pokeMonListModel.results[index].pokemonId.toString().padLeft(3, '0')}', // Ensures a minimum of 3 digits
+                                                                      style: TextStyles
+                                                                          .poppins12black,
                                                                     ),
-                                                                    onPressed:
-                                                                        () {
-                                                                      _toggleFavorite(value
-                                                                          .pokemonListmodel
-                                                                          .pokeMonListModel
-                                                                          .results[index]);
-                                                                    },
-                                                                  ),
-                                                                  Wrap(
-                                                                    children: value
-                                                                            .pokemonListmodel
-                                                                            .speciesTypes
-                                                                            .isNotEmpty
-                                                                        ? value
-                                                                            .pokemonListmodel
-                                                                            .speciesTypes[
-                                                                                index] // Access the sublist at the specific index
-                                                                            .map((type) =>
-                                                                                Padding(
-                                                                                  padding: const EdgeInsets.all(2.0),
-                                                                                  child: Container(
-                                                                                    decoration: BoxDecoration(
-                                                                                        color: _getContainerColor(type),
-                                                                                        borderRadius: BorderRadius.circular(
-                                                                                          12,
-                                                                                        )),
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsets.symmetric(
-                                                                                        horizontal: 9,
-                                                                                        vertical: 3,
-                                                                                      ),
-                                                                                      child: Text(
-                                                                                        type, // Display each type individually
-                                                                                        style: TextStyles.poppins12white, // Adjust font size as needed
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ))
-                                                                            .toList()
-                                                                        : [
-                                                                            const Text('fff',
-                                                                                style: TextStyle(fontSize: 12))
-                                                                          ], // Default text when the list is empty
-                                                                  ),
-                                                                ],
+                                                                    Text(
+                                                                        value
+                                                                            .pokemonlist
+                                                                            .pokeMonListModel
+                                                                            .results[
+                                                                                index]
+                                                                            .name,
+                                                                        style: TextStyles
+                                                                            .poppins19white),
+                                                                    Row(
+                                                                      children: [
+                                                                        IconButton(
+                                                                          icon:
+                                                                              Icon(
+                                                                            // Change icon based on favorite status
+                                                                            Icons.favorite,
+                                                                            color: isFavorite(value.pokemonlist.pokeMonListModel.results[index])
+                                                                                ? Colors.red
+                                                                                : Colors.grey,
+                                                                          ),
+                                                                          onPressed:
+                                                                              () {
+                                                                            _toggleFavorite(value.pokemonlist.pokeMonListModel.results[index]);
+                                                                          },
+                                                                        ),
+                                                                        Wrap(
+                                                                          children: value
+                                                                                  .pokemonlist.speciesTypes.isNotEmpty
+                                                                              ? value
+                                                                                  .pokemonlist
+                                                                                  .speciesTypes[
+                                                                                      index] // Access the sublist at the specific index
+                                                                                  .map((type) =>
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsets.all(2.0),
+                                                                                        child: Container(
+                                                                                          decoration: BoxDecoration(
+                                                                                              color: _getContainerColor(type),
+                                                                                              borderRadius: BorderRadius.circular(
+                                                                                                12,
+                                                                                              )),
+                                                                                          child: Padding(
+                                                                                            padding: const EdgeInsets.symmetric(
+                                                                                              horizontal: 9,
+                                                                                              vertical: 3,
+                                                                                            ),
+                                                                                            child: Text(
+                                                                                              type, // Display each type individually
+                                                                                              style: TextStyles.poppins12white, // Adjust font size as needed
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ))
+                                                                                  .toList()
+                                                                              : [
+                                                                                  const Text('fff', style: TextStyle(fontSize: 12))
+                                                                                ], // Default text when the list is empty
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
+                                                              const Spacer(),
                                                             ],
                                                           ),
                                                         ),
-                                                        const Spacer(),
-                                                      ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 15),
-                                                child: Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Image.network(
-                                                    value
-                                                        .pokemonListmodel
-                                                        .pokeMonListModel
-                                                        .results[index]
-                                                        .image,
-                                                    width: 130,
-                                                    height: 130,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )));
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 15),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: Image.network(
+                                                          value
+                                                              .pokemonlist
+                                                              .pokeMonListModel
+                                                              .results[index]
+                                                              .image,
+                                                          width: 130,
+                                                          height: 130,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )));
+                                      },
+                                    ),
+                                  );
                                 },
                               ),
-                            );
-                          },
-                        ),
-                      ],
-                    );
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      return BlocBuilder<GetPokemonListBloc,
+                          GetPokemonListState>(
+                        builder: (context, state) {
+                          return Column(
+                            children: [
+                              state.maybeMap(
+                                orElse: () => const SizedBox.shrink(),
+                                failure: (value) {
+                                  return Center(child: Text(value.error));
+                                },
+                                initial: (value) {
+                                  return _buildLoadingGrid(); // Show loading grid
+                                },
+                                loading: (value) {
+                                  return _buildLoadingGrid(); // Show loading grid
+                                },
+                                noInternet: (value) {
+                                  return const Center(
+                                      child: Text("No Internet"));
+                                },
+                                success: (value) {
+                                  // allPokemons.addAll(value
+                                  //     .pokemonListmodel.pokeMonListModel.results);
+                                  List<Widget> speciesTypeWidgets = value
+                                      .pokemonListmodel.speciesTypes
+                                      .map((type) {
+                                    return Text(
+                                      type.first,
+                                      style: const TextStyle(fontSize: 5),
+                                    );
+                                  }).toList();
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30),
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: value.pokemonListmodel
+                                          .pokeMonListModel.results.length,
+                                      itemBuilder: (context, index) {
+                                        String type = value.pokemonListmodel
+                                            .speciesTypes[index].first;
+                                        return GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return PokemonDetailScreen(
+                                                    pokemonName: 'e',
+                                                    pokemonIndex: index + 1);
+                                              }));
+                                            },
+                                            child: SizedBox(
+                                                width: 200,
+                                                height: 187,
+                                                child: Stack(
+                                                  children: [
+                                                    Align(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 15),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color:
+                                                                _getOuterContainerColor(
+                                                                    type),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        8.0),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      '#${value.pokemonListmodel.pokeMonListModel.results[index].pokemonId.toString().padLeft(3, '0')}', // Ensures a minimum of 3 digits
+                                                                      style: TextStyles
+                                                                          .poppins12black,
+                                                                    ),
+                                                                    Text(
+                                                                        value
+                                                                            .pokemonListmodel
+                                                                            .pokeMonListModel
+                                                                            .results[
+                                                                                index]
+                                                                            .name,
+                                                                        style: TextStyles
+                                                                            .poppins19white),
+                                                                    Row(
+                                                                      children: [
+                                                                        IconButton(
+                                                                          icon:
+                                                                              Icon(
+                                                                            // Change icon based on favorite status
+                                                                            Icons.favorite,
+                                                                            color: isFavorite(value.pokemonListmodel.pokeMonListModel.results[index])
+                                                                                ? Colors.red
+                                                                                : Colors.grey,
+                                                                          ),
+                                                                          onPressed:
+                                                                              () {
+                                                                            _toggleFavorite(value.pokemonListmodel.pokeMonListModel.results[index]);
+                                                                          },
+                                                                        ),
+                                                                        Wrap(
+                                                                          children: value
+                                                                                  .pokemonListmodel.speciesTypes.isNotEmpty
+                                                                              ? value
+                                                                                  .pokemonListmodel
+                                                                                  .speciesTypes[
+                                                                                      index] // Access the sublist at the specific index
+                                                                                  .map((type) =>
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsets.all(2.0),
+                                                                                        child: Container(
+                                                                                          decoration: BoxDecoration(
+                                                                                              color: _getContainerColor(type),
+                                                                                              borderRadius: BorderRadius.circular(
+                                                                                                12,
+                                                                                              )),
+                                                                                          child: Padding(
+                                                                                            padding: const EdgeInsets.symmetric(
+                                                                                              horizontal: 9,
+                                                                                              vertical: 3,
+                                                                                            ),
+                                                                                            child: Text(
+                                                                                              type, // Display each type individually
+                                                                                              style: TextStyles.poppins12white, // Adjust font size as needed
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ))
+                                                                                  .toList()
+                                                                              : [
+                                                                                  const Text('fff', style: TextStyle(fontSize: 12))
+                                                                                ], // Default text when the list is empty
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const Spacer(),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 15),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: Image.network(
+                                                          value
+                                                              .pokemonListmodel
+                                                              .pokeMonListModel
+                                                              .results[index]
+                                                              .image,
+                                                          width: 130,
+                                                          height: 130,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )));
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                 ),
               ],
@@ -672,5 +912,127 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildLoadingGrid() {
     return const Center(child: CircularProgressIndicator());
+  }
+
+  void _showModal(BuildContext context) {
+    String? selectedType;
+    showModalBottomSheet(
+      isDismissible: false,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+      ),
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return DraggableScrollableSheet(
+              maxChildSize: 0.8,
+              initialChildSize: 0.7,
+              minChildSize: 0.5,
+              expand: false,
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 21),
+                    // Title Row with close button
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Filter by Title",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: const Icon(Icons.close, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Wrap widget displaying Pokémon types
+                    Expanded(
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Wrap(
+                            spacing: 10.0,
+                            runSpacing: 10.0,
+                            children: pokemonTypes.map((type) {
+                              return FilterChip(
+                                label: Text(type.name),
+                                onSelected: (bool value) {
+                                  setState(() {
+                                    selectedType = value
+                                        ? type.id.toString()
+                                        : ''; // Set selected type
+                                  });
+                                  BlocProvider.of<FilterpokemonTypesBloc>(
+                                          context)
+                                      .add(
+                                          FilterpokemonTypesEvent.filterPokemon(
+                                    type: type.id,
+                                  ));
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Bottom buttons with 10 spacing and padding at bottom
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 10, left: 20, right: 20, top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _isItemSelected = false; // Clear selection
+                              });
+                              _updateItemSelected(false);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Colors.red, // Customize clear button color
+                            ),
+                            child: const Text('Clear'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _isItemSelected =
+                                    true; // Update state based on selection
+                              });
+                              _updateItemSelected(true);
+                              BlocProvider.of<FilterpokemonTypesBloc>(context)
+                                  .add(FilterpokemonTypesEvent.filterPokemon(
+                                type: int.parse(selectedType!),
+                              ));
+                            },
+                            child: const Text('Apply Filter'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 }

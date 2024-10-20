@@ -8,6 +8,7 @@ class PokeMonListFullModel {
   });
 }
 
+
 class PokeMonListModel {
   final int count;
   final String? next;
@@ -21,6 +22,7 @@ class PokeMonListModel {
     required this.results,
   });
 
+  // Factory method for general Pokémon list API
   factory PokeMonListModel.fromJson(Map<String, dynamic> json) {
     var resultsList = json['results'] as List;
     List<PokemonModel> pokemonList =
@@ -33,7 +35,52 @@ class PokeMonListModel {
       results: pokemonList,
     );
   }
+
+  // New factory method for type-based API responses
+  factory PokeMonListModel.fromTypeArray(List<dynamic> pokemonArray) {
+    // In the type response, the Pokémon are nested inside another object, like:
+    // { "pokemon": { "name": "...", "url": "..." } }
+    List<PokemonModel> pokemonList = pokemonArray
+        .map((pokemonEntry) => PokemonModel.fromJson(pokemonEntry['pokemon']))
+        .toList();
+
+    return PokeMonListModel(
+      count: pokemonList.length, // The total number of Pokémon in the type
+      next: null, // 'next' and 'previous' aren't relevant for type-based fetches
+      previous: null,
+      results: pokemonList,
+    );
+  }
 }
+
+
+
+// class PokeMonListModel {
+//   final int count;
+//   final String? next;
+//   final String? previous;
+//   final List<PokemonModel> results;
+
+//   PokeMonListModel({
+//     required this.count,
+//     this.next,
+//     this.previous,
+//     required this.results,
+//   });
+
+//   factory PokeMonListModel.fromJson(Map<String, dynamic> json) {
+//     var resultsList = json['results'] as List;
+//     List<PokemonModel> pokemonList =
+//         resultsList.map((pokemon) => PokemonModel.fromJson(pokemon)).toList();
+
+//     return PokeMonListModel(
+//       count: json['count'] ?? 0,
+//       next: json['next'],
+//       previous: json['previous'],
+//       results: pokemonList,
+//     );
+//   }
+// }
 
 class PokemonModel {
   final String name;

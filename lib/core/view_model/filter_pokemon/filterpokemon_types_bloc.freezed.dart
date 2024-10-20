@@ -19,19 +19,19 @@ mixin _$FilterpokemonTypesEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String type) filterPokemon,
+    required TResult Function(int type) filterPokemon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String type)? filterPokemon,
+    TResult? Function(int type)? filterPokemon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String type)? filterPokemon,
+    TResult Function(int type)? filterPokemon,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,7 +120,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String type) filterPokemon,
+    required TResult Function(int type) filterPokemon,
   }) {
     return started();
   }
@@ -129,7 +129,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String type)? filterPokemon,
+    TResult? Function(int type)? filterPokemon,
   }) {
     return started?.call();
   }
@@ -138,7 +138,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String type)? filterPokemon,
+    TResult Function(int type)? filterPokemon,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -190,7 +190,7 @@ abstract class _$$FilterpokemonTypesEventImplCopyWith<$Res> {
           $Res Function(_$FilterpokemonTypesEventImpl) then) =
       __$$FilterpokemonTypesEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String type});
+  $Res call({int type});
 }
 
 /// @nodoc
@@ -214,7 +214,7 @@ class __$$FilterpokemonTypesEventImplCopyWithImpl<$Res>
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -225,7 +225,7 @@ class _$FilterpokemonTypesEventImpl implements _FilterpokemonTypesEvent {
   const _$FilterpokemonTypesEventImpl({required this.type});
 
   @override
-  final String type;
+  final int type;
 
   @override
   String toString() {
@@ -256,7 +256,7 @@ class _$FilterpokemonTypesEventImpl implements _FilterpokemonTypesEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String type) filterPokemon,
+    required TResult Function(int type) filterPokemon,
   }) {
     return filterPokemon(type);
   }
@@ -265,7 +265,7 @@ class _$FilterpokemonTypesEventImpl implements _FilterpokemonTypesEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String type)? filterPokemon,
+    TResult? Function(int type)? filterPokemon,
   }) {
     return filterPokemon?.call(type);
   }
@@ -274,7 +274,7 @@ class _$FilterpokemonTypesEventImpl implements _FilterpokemonTypesEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String type)? filterPokemon,
+    TResult Function(int type)? filterPokemon,
     required TResult orElse(),
   }) {
     if (filterPokemon != null) {
@@ -316,10 +316,10 @@ class _$FilterpokemonTypesEventImpl implements _FilterpokemonTypesEvent {
 }
 
 abstract class _FilterpokemonTypesEvent implements FilterpokemonTypesEvent {
-  const factory _FilterpokemonTypesEvent({required final String type}) =
+  const factory _FilterpokemonTypesEvent({required final int type}) =
       _$FilterpokemonTypesEventImpl;
 
-  String get type;
+  int get type;
 
   /// Create a copy of FilterpokemonTypesEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -334,7 +334,7 @@ mixin _$FilterpokemonTypesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokemonTypeModel pokemondetails) success,
+    required TResult Function(PokeMonListFullModel pokemonlist) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) =>
@@ -343,7 +343,7 @@ mixin _$FilterpokemonTypesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokemonTypeModel pokemondetails)? success,
+    TResult? Function(PokeMonListFullModel pokemonlist)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) =>
@@ -352,7 +352,7 @@ mixin _$FilterpokemonTypesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokemonTypeModel pokemondetails)? success,
+    TResult Function(PokeMonListFullModel pokemonlist)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -453,7 +453,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokemonTypeModel pokemondetails) success,
+    required TResult Function(PokeMonListFullModel pokemonlist) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -465,7 +465,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokemonTypeModel pokemondetails)? success,
+    TResult? Function(PokeMonListFullModel pokemonlist)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -477,7 +477,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokemonTypeModel pokemondetails)? success,
+    TResult Function(PokeMonListFullModel pokemonlist)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -576,7 +576,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokemonTypeModel pokemondetails) success,
+    required TResult Function(PokeMonListFullModel pokemonlist) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -588,7 +588,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokemonTypeModel pokemondetails)? success,
+    TResult? Function(PokeMonListFullModel pokemonlist)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -600,7 +600,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokemonTypeModel pokemondetails)? success,
+    TResult Function(PokeMonListFullModel pokemonlist)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -662,7 +662,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({PokemonTypeModel pokemondetails});
+  $Res call({PokeMonListFullModel pokemonlist});
 }
 
 /// @nodoc
@@ -678,13 +678,13 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pokemondetails = null,
+    Object? pokemonlist = null,
   }) {
     return _then(_$SuccessImpl(
-      null == pokemondetails
-          ? _value.pokemondetails
-          : pokemondetails // ignore: cast_nullable_to_non_nullable
-              as PokemonTypeModel,
+      null == pokemonlist
+          ? _value.pokemonlist
+          : pokemonlist // ignore: cast_nullable_to_non_nullable
+              as PokeMonListFullModel,
     ));
   }
 }
@@ -692,14 +692,14 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.pokemondetails);
+  const _$SuccessImpl(this.pokemonlist);
 
   @override
-  final PokemonTypeModel pokemondetails;
+  final PokeMonListFullModel pokemonlist;
 
   @override
   String toString() {
-    return 'FilterpokemonTypesState.success(pokemondetails: $pokemondetails)';
+    return 'FilterpokemonTypesState.success(pokemonlist: $pokemonlist)';
   }
 
   @override
@@ -707,12 +707,12 @@ class _$SuccessImpl implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            (identical(other.pokemondetails, pokemondetails) ||
-                other.pokemondetails == pokemondetails));
+            (identical(other.pokemonlist, pokemonlist) ||
+                other.pokemonlist == pokemonlist));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pokemondetails);
+  int get hashCode => Object.hash(runtimeType, pokemonlist);
 
   /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
@@ -727,11 +727,11 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokemonTypeModel pokemondetails) success,
+    required TResult Function(PokeMonListFullModel pokemonlist) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
-    return success(pokemondetails);
+    return success(pokemonlist);
   }
 
   @override
@@ -739,11 +739,11 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokemonTypeModel pokemondetails)? success,
+    TResult? Function(PokeMonListFullModel pokemonlist)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
-    return success?.call(pokemondetails);
+    return success?.call(pokemonlist);
   }
 
   @override
@@ -751,13 +751,13 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokemonTypeModel pokemondetails)? success,
+    TResult Function(PokeMonListFullModel pokemonlist)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(pokemondetails);
+      return success(pokemonlist);
     }
     return orElse();
   }
@@ -804,9 +804,10 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements FilterpokemonTypesState {
-  const factory _Success(final PokemonTypeModel pokemondetails) = _$SuccessImpl;
+  const factory _Success(final PokeMonListFullModel pokemonlist) =
+      _$SuccessImpl;
 
-  PokemonTypeModel get pokemondetails;
+  PokeMonListFullModel get pokemonlist;
 
   /// Create a copy of FilterpokemonTypesState
   /// with the given fields replaced by the non-null parameter values.
@@ -858,7 +859,7 @@ class _$NoInternetImpl implements _NoInternet {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokemonTypeModel pokemondetails) success,
+    required TResult Function(PokeMonListFullModel pokemonlist) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -870,7 +871,7 @@ class _$NoInternetImpl implements _NoInternet {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokemonTypeModel pokemondetails)? success,
+    TResult? Function(PokeMonListFullModel pokemonlist)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -882,7 +883,7 @@ class _$NoInternetImpl implements _NoInternet {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokemonTypeModel pokemondetails)? success,
+    TResult Function(PokeMonListFullModel pokemonlist)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),
@@ -1008,7 +1009,7 @@ class _$FailureImpl implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(PokemonTypeModel pokemondetails) success,
+    required TResult Function(PokeMonListFullModel pokemonlist) success,
     required TResult Function() noInternet,
     required TResult Function(String error) failure,
   }) {
@@ -1020,7 +1021,7 @@ class _$FailureImpl implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(PokemonTypeModel pokemondetails)? success,
+    TResult? Function(PokeMonListFullModel pokemonlist)? success,
     TResult? Function()? noInternet,
     TResult? Function(String error)? failure,
   }) {
@@ -1032,7 +1033,7 @@ class _$FailureImpl implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(PokemonTypeModel pokemondetails)? success,
+    TResult Function(PokeMonListFullModel pokemonlist)? success,
     TResult Function()? noInternet,
     TResult Function(String error)? failure,
     required TResult orElse(),

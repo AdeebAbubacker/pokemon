@@ -1,3 +1,13 @@
+class PokemonTypeFullModel {
+  final PokemonTypeModel pokeMonListModel;
+  final List<List<String>> speciesTypes; // Changed to a list of lists
+
+  PokemonTypeFullModel({
+    required this.pokeMonListModel,
+    required this.speciesTypes,
+  });
+}
+
 class PokemonTypeModel {
   final DamageRelations damageRelations;
   final List<GameIndex> gameIndices;

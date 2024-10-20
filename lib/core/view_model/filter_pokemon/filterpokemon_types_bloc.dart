@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pokemon/core/model/poke_mon_list_model/poke_mon_list_model.dart';
 import 'package:pokemon/core/model/pokemon_type_model/pokemon_type_model.dart';
 import 'package:pokemon/core/service/api_service.dart';
 
@@ -12,7 +13,7 @@ class FilterpokemonTypesBloc
   FilterpokemonTypesBloc() : super(_Initial()) {
     on<_FilterpokemonTypesEvent>((event, emit) async {
       emit(const FilterpokemonTypesState.loading());
-      final response = await ApiService.filterPokemonType(type: event.type);
+      final response = await ApiService.getPokemonListByType(typeId: event.type);
 
       response.fold((failure) {
         if (failure == "No Internet") {

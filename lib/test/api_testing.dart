@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon/Ui/Screens/pokemon_details_screen.dart';
+import 'package:pokemon/core/const/text_style.dart';
+import 'package:pokemon/core/service/api_service.dart';
 import 'package:pokemon/core/view_model/filter_pokemon/filterpokemon_types_bloc.dart';
+import 'package:pokemon/core/service/api_service_2.dart';
 
 class ApiTesting extends StatelessWidget {
   const ApiTesting({super.key});
@@ -9,49 +13,213 @@ class ApiTesting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  _showModal(context); // Call the _showModal function here
-                },
-                child: const Text("Open Modal"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  BlocProvider.of<FilterpokemonTypesBloc>(context).add(
-                      const FilterpokemonTypesEvent.filterPokemon(type: '2'));
-                },
-                child: const Text("Call Api"),
-              ),
-              BlocBuilder<FilterpokemonTypesBloc, FilterpokemonTypesState>(
-                builder: (context, state) {
-                  return state.maybeMap(
-                    orElse: () {
-                      return const Text('data');
-                    },
-                    failure: (value) {
-                      return Text(value.error);
-                    },
-                    initial: (value) {
-                      return const Text('Initial state');
-                    },
-                    loading: (value) {
-                      return const CircularProgressIndicator();
-                    },
-                    success: (value) {
-                      return Text('Pokémon ID: ${value.pokemondetails.id}');
-                    },
-                    noInternet: (value) {
-                      return const Text("No Internet");
-                    },
-                  );
-                },
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _showModal(context); // Call the _showModal function here
+                  },
+                  child: const Text("Open Modal"),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    // await ApiService.getPokemonListByType(typeId: 2);
+                    BlocProvider.of<FilterpokemonTypesBloc>(context).add(
+                        const FilterpokemonTypesEvent.filterPokemon(type: 2));
+                  },
+                  child: const Text("Call Api"),
+                ),
+                BlocBuilder<FilterpokemonTypesBloc, FilterpokemonTypesState>(
+                  builder: (context, state) {
+                    return state.maybeMap(
+                      orElse: () {
+                        return const Text('data');
+                      },
+                      failure: (value) {
+                        return Text(value.error);
+                      },
+                      initial: (value) {
+                        return const Text('Initial state');
+                      },
+                      loading: (value) {
+                        return const CircularProgressIndicator();
+                      },
+                      success: (value) {
+                        // allPokemons.addAll(value
+                        //     .pokemonListmodel.pokeMonListModel.results);
+                        List<Widget> speciesTypeWidgets =
+                            value.pokemonlist.speciesTypes.map((type) {
+                          return Text(
+                            type.first,
+                            style: const TextStyle(fontSize: 5),
+                          );
+                        }).toList();
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: value
+                                .pokemonlist.pokeMonListModel.results.length,
+                            itemBuilder: (context, index) {
+                              String type =
+                                  value.pokemonlist.speciesTypes[index].first;
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return PokemonDetailScreen(
+                                          pokemonName: 'e',
+                                          pokemonIndex: int.parse(value
+                                              .pokemonlist
+                                              .pokeMonListModel
+                                              .results[index]
+                                              .pokemonId));
+                                    }));
+                                  },
+                                  child: SizedBox(
+                                      width: 200,
+                                      height: 187,
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 15),
+                                              child: Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            '#${value.pokemonlist.pokeMonListModel.results[index].pokemonId.toString().padLeft(3, '0')}', // Ensures a minimum of 3 digits
+                                                            style: TextStyles
+                                                                .poppins12black,
+                                                          ),
+                                                          Text(
+                                                              value
+                                                                  .pokemonlist
+                                                                  .pokeMonListModel
+                                                                  .results[
+                                                                      index]
+                                                                  .name,
+                                                              style: TextStyles
+                                                                  .poppins19white),
+                                                          Row(
+                                                            children: [
+                                                              IconButton(
+                                                                icon: Icon(
+                                                                    // Change icon based on favorite status
+                                                                    Icons
+                                                                        .favorite,
+                                                                    color: Colors
+                                                                        .red),
+                                                                onPressed:
+                                                                    () {},
+                                                              ),
+                                                              Wrap(
+                                                                children: value
+                                                                        .pokemonlist
+                                                                        .speciesTypes
+                                                                        .isNotEmpty
+                                                                    ? value
+                                                                        .pokemonlist
+                                                                        .speciesTypes[
+                                                                            index] // Access the sublist at the specific index
+                                                                        .map((type) =>
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.all(2.0),
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(
+                                                                                    color: Colors.redAccent,
+                                                                                    borderRadius: BorderRadius.circular(
+                                                                                      12,
+                                                                                    )),
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.symmetric(
+                                                                                    horizontal: 9,
+                                                                                    vertical: 3,
+                                                                                  ),
+                                                                                  child: Text(
+                                                                                    type, // Display each type individually
+                                                                                    style: TextStyles.poppins12white, // Adjust font size as needed
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ))
+                                                                        .toList()
+                                                                    : [
+                                                                        const Text(
+                                                                            'fff',
+                                                                            style:
+                                                                                TextStyle(fontSize: 12))
+                                                                      ], // Default text when the list is empty
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const Spacer(),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 15),
+                                            child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Image.network(
+                                                value
+                                                    .pokemonlist
+                                                    .pokeMonListModel
+                                                    .results[index]
+                                                    .image,
+                                                width: 130,
+                                                height: 130,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )));
+                            },
+                          ),
+                        );
+                      },
+                      noInternet: (value) {
+                        return const Text("No Internet");
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -59,6 +227,7 @@ class ApiTesting extends StatelessWidget {
   }
 
   void _showModal(BuildContext context) {
+    String? selectedType;
     showModalBottomSheet(
       isDismissible: false,
       isScrollControlled: true,
@@ -114,12 +283,15 @@ class ApiTesting extends StatelessWidget {
                               return FilterChip(
                                 label: Text(type.name),
                                 onSelected: (bool value) {
-                                  // Handle chip selection
+                                  setState(() {
+                                    selectedType = value
+                                        ? type.id.toString() : ''; // Set selected type
+                                  });
                                   BlocProvider.of<FilterpokemonTypesBloc>(
                                           context)
                                       .add(
                                           FilterpokemonTypesEvent.filterPokemon(
-                                    type: type.id.toString(),
+                                    type: type.id,
                                   ));
                                   Navigator.of(context)
                                       .pop(); // Close the modal after selection
@@ -149,7 +321,10 @@ class ApiTesting extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              // Handle Apply Filter action
+                              BlocProvider.of<FilterpokemonTypesBloc>(context)
+                                  .add(FilterpokemonTypesEvent.filterPokemon(
+                                type: int.parse(selectedType!) ,
+                              ));
                             },
                             child: const Text('Apply Filter'),
                           ),
@@ -165,6 +340,8 @@ class ApiTesting extends StatelessWidget {
       },
     );
   }
+
+
 }
 
 // Model for Pokémon Type
